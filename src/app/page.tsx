@@ -1,4 +1,5 @@
-import H1 from '@/components/h1';
+import H1 from '@/components/H1';
+import SearchForm from '@/components/SearchForm';
 import Link from 'next/link';
 
 export default function Home() {
@@ -11,14 +12,7 @@ export default function Home() {
         around you
       </p>
 
-      <form action='' className='mt-6'>
-        <input
-          type='text'
-          name='location'
-          placeholder='Search events in any city...'
-          className='bg-gray-600 p-3 rounded-lg w-3/4 md:w-xl focus:bg-gray-700 focus:text-white ring-2 ring-gray-700 focus:ring-accent transition-colors duration-200 outline-none'
-        />
-      </form>
+      <SearchForm />
 
       <section className='text-sm flex justify-center gap-8 text-white/50'>
         <p>Popular:</p>
