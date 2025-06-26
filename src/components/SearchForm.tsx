@@ -1,12 +1,22 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const SearchForm = () => {
   const [searchText, setSearchText] = useState('');
+  const router = useRouter();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!searchText) return;
+
+    // encodeURIComponent() behandelt Sonderzeichen (z.B. "New York" → "new%20york")
+    const normalizedCity = encodeURIComponent(searchText.trim().toLowerCase());
+    router.push(`/events/${normalizedCity}`);
+
+    setSearchText('');
   };
 
   return (

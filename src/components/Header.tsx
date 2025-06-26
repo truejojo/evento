@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 const routerLinks = [
   { href: '/', label: 'Home' },
-  { href: '/events/austin', label: 'Events' },
+  { href: '/events/all', label: 'All Events' },
 ];
 
 const Header = () => {
