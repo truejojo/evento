@@ -1,11 +1,10 @@
+import H1 from '@/components/h1';
 import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main className='text-center flex flex-col gap-6'>
-      <h1 className='text-6xl font-bold leading-none'>
-        Find events around you
-      </h1>
+    <main className='text-center flex flex-col gap-6 '>
+      <H1>Find events around you</H1>
       <p className='text-3xl'>
         Browse more than{' '}
         <span className='italic underline text-accent'>10,000 events</span>{' '}
