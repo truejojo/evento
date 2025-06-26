@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Evento',
-  description: 'Next.js fundamentals and advanced concepts',
+  title: 'Evento - find events arount you',
+  description: 'Browse more than 1000 events worldwide',
 };
 
 export default function RootLayout({

@@ -8,7 +8,7 @@ export default function Home() {
       </h1>
       <p className='text-3xl'>
         Browse more than{' '}
-        <span className='italic underline text-[#52df05]'>10,000 events</span>{' '}
+        <span className='italic underline text-accent'>10,000 events</span>{' '}
         around you
       </p>
 
@@ -17,7 +17,7 @@ export default function Home() {
           type='text'
           name='location'
           placeholder='Search events in any city...'
-          className='bg-gray-600 p-3 rounded-lg w-3/4 md:w-xl focus:bg-gray-700 focus:text-white ring-2 ring-gray-700 focus:ring-[#52df05] transition-colors duration-200 outline-none'
+          className='bg-gray-600 p-3 rounded-lg w-3/4 md:w-xl focus:bg-gray-700 focus:text-white ring-2 ring-gray-700 focus:ring-accent transition-colors duration-200 outline-none'
         />
       </form>
 
