@@ -11,7 +11,7 @@ const EventsPage = async ({ params }: EventsPageProps) => {
   const events: EventProps[] = await response.json();
 
   return (
-    <main className='flex flex-col items-center min-h-[110vh] pt-20'>
+    <main className='flex flex-col items-center gap-20 min-h-[110vh] py-20'>
       {city === 'all' ? (
         <H1>All Events</H1>
       ) : (
