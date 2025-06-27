@@ -4,9 +4,7 @@ type ContainerProps = {
 
 const Container = ({ children }: ContainerProps) => {
   return (
-    <div className='container mx-auto grid min-h-screen bg-gray-900'>
-      {children}
-    </div>
+    <div className='container mx-auto min-h-screen bg-gray-900'>{children}</div>
   );
 };
 
