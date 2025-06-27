@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Logo from './Logo';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import clsx from 'clsx';
+import { cn } from '@/lib';
 
 const routerLinks = [
   { href: '/', label: 'Home' },
@@ -22,7 +22,7 @@ const Header = () => {
           {routerLinks.map((link) => (
             <li
               key={link.href}
-              className={clsx(
+              className={cn(
                 'hover:text-white transition-colors duration-200 relative h-full flex items-center',
                 {
                   'text-white': activeRoute === link.href,

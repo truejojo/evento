@@ -1,8 +1,7 @@
 import EventsList from '@/components/EventsList';
 import H1 from '@/components/H1';
 import { EventsPageProps, EventProps } from '@/types';
-
-const URL = 'https://bytegrad.com/course-assets/projects/evento/api';
+import { URL } from '@/constants';
 
 const EventsPage = async ({ params }: EventsPageProps) => {
   const { city } = await params;
