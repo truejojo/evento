@@ -1,9 +1,7 @@
 import H1 from '@/components/H1';
-import { EVENTO_MAIN_URL } from '@/constants';
-import { EventProps } from '@/types';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { capitalize } from '@/lib';
+import { capitalize, fetchEvent } from '@/lib';
 
 type EventPageProps = {
   params: {
@@ -16,8 +14,7 @@ export const generateMetadata = async ({
 }: EventPageProps): Promise<Metadata> => {
   const { slug } = await params;
 
-  const response = await fetch(`${EVENTO_MAIN_URL}/events/${slug}`);
-  const event: EventProps = await response.json();
+  const event = await fetchEvent(slug);
 
   return {
     title: `Event: ${capitalize(event.name)}`,
@@ -27,9 +24,7 @@ export const generateMetadata = async ({
 const EventPage = async ({ params }: EventPageProps) => {
   const { slug } = await params;
 
-  const response = await fetch(`${EVENTO_MAIN_URL}/events/${slug}`);
-  const event: EventProps = await response.json();
-
+  const event = await fetchEvent(slug);
   const date = new Date(event.date);
 
   return (
