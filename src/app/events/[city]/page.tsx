@@ -2,10 +2,12 @@ import EventsList from '@/components/EventsList';
 import H1 from '@/components/H1';
 import { EventsPageProps, EventProps } from '@/types';
 import { URL } from '@/constants';
+import { sleep } from '@/lib';
 
 const EventsPage = async ({ params }: EventsPageProps) => {
   const { city } = await params;
 
+  sleep(2000);
   const response = await fetch(`${URL}/events?city=${city}`);
   const events: EventProps[] = await response.json();
 

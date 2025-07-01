@@ -1,5 +1,6 @@
 import H1 from '@/components/H1';
 import { URL } from '@/constants';
+import { sleep } from '@/lib';
 import { EventProps } from '@/types';
 import Image from 'next/image';
 
@@ -12,6 +13,7 @@ type EventPageProps = {
 const EventPage = async ({ params }: EventPageProps) => {
   const { slug } = await params;
 
+  sleep(2000);
   const response = await fetch(`${URL}/events/${slug}`);
   const event: EventProps = await response.json();
 
@@ -22,7 +24,7 @@ const EventPage = async ({ params }: EventPageProps) => {
       <section className='relative h-[400px] lg:h-[361px] overflow-hidden flex items-center justify-center'>
         <Image
           src={event.imageUrl}
-          className='object-cover blur-3xl'
+          className='object-fit blur-3xl'
           alt={`Event background image: ${event.name}`}
           fill
           quality={50}
