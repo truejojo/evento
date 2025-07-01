@@ -1,11 +1,11 @@
-import Skeleton from '@/components/skeleton';
+import SkeletonCard from '@/components/SkeletonCard';
 
 const Loading = () => {
   return (
-    <div className='animate-pulse grid gap-4 justify-center my-12'>
-      <Skeleton className='h-6 w-[550px]' />
-      <Skeleton className='h-6 w-[420px]' />
-      <Skeleton className='h-6 w-[500px]' />
+    <div className='animate-pulse flex gap-6 lg:gap-12 flex-wrap justify-center px-10 lg:px-50 my-12'>
+      {[...Array(6)].map((_, i) => (
+        <SkeletonCard key={i} />
+      ))}
     </div>
   );
 };

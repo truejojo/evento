@@ -1,5 +1,5 @@
 import H1 from '@/components/H1';
-import { URL } from '@/constants';
+import { EVENTO_MAIN_URL } from '@/constants';
 import { sleep } from '@/lib';
 import { EventProps } from '@/types';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ const EventPage = async ({ params }: EventPageProps) => {
   const { slug } = await params;
 
   sleep(2000);
-  const response = await fetch(`${URL}/events/${slug}`);
+  const response = await fetch(`${EVENTO_MAIN_URL}/events/${slug}`);
   const event: EventProps = await response.json();
 
   const date = new Date(event.date);

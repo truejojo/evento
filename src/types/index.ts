@@ -21,5 +21,5 @@ export type EventCardProps = {
 };
 
 export type EventsListProps = {
-  events: EventProps[];
+  city: string;
 };
