@@ -23,9 +23,6 @@ export const fetchEvent = async (slug: string) => {
   return event;
 };
 
-/**
- * Problem bei dieser EventList ist, dass sie nicht wiederverwenbar ist. Um das data-fetchng zu vermeiden, ist es sinnvoll eine weitere Komponente(Wrapper) zu erstellen, welche die EventsList als Child Component hat.
- */
 export const fetchEvents = async (city: string) => {
   const response = await fetch(`${EVENTO_MAIN_URL}/events?city=${city}`, {
     next: {
