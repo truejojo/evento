@@ -1,7 +1,10 @@
 import { twMerge } from 'tailwind-merge';
 import clsx, { ClassValue } from 'clsx';
-import { EVENTO_MAIN_URL } from '@/constants';
-import { EventProps } from '@/types';
+// import { EVENTO_MAIN_URL } from '@/constants';
+import { EventoEvent } from '@prisma/client';
+import prisma from './db';
+
+// const prisma = new PrismaClient();
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -17,19 +20,34 @@ export const capitalize = (str: string) => {
 };
 
 export const fetchEvent = async (slug: string) => {
-  const response = await fetch(`${EVENTO_MAIN_URL}/events/${slug}`);
-  const event: EventProps = await response.json();
+  // const response = await fetch(`${EVENTO_MAIN_URL}/events/${slug}`);
+  // const event: EventoEvent = await response.json();
 
-  return event;
+  const event = await prisma.eventoEvent.findUnique({
+    where: {
+      slug: slug,
+    },
+  });
+
+  return event as EventoEvent;
 };
 
 export const fetchEvents = async (city: string) => {
-  const response = await fetch(`${EVENTO_MAIN_URL}/events?city=${city}`, {
-    next: {
-      revalidate: 180,
+  // const response = await fetch(`${EVENTO_MAIN_URL}/events?city=${city}`, {
+  //   next: {
+  //     revalidate: 180,
+  //   },
+  // });
+  // const events: EventoEvent[] = await response.json();
+
+  const events = await prisma.eventoEvent.findMany({
+    where: {
+      city: city === 'all' ? undefined : capitalize(city),
+    },
+    orderBy: {
+      date: 'asc',
     },
   });
-  const events: EventProps[] = await response.json();
 
-  return events;
+  return events as EventoEvent[];
 };
