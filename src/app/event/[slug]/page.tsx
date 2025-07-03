@@ -1,7 +1,8 @@
 import H1 from '@/components/H1';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { capitalize, fetchEvent } from '@/lib';
+import { capitalize } from '@/lib';
+import { fetchEvent } from '@/lib/server-utils';
 
 type EventPageProps = {
   params: {

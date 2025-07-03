@@ -1,6 +1,6 @@
 import { EventsListProps } from '@/types';
 import EventCard from './EventCard';
-import { fetchEvents } from '@/lib';
+import { fetchEvents } from '@/lib/server-utils';
 import Pagination from '@/components/Pagination';
 
 /**
