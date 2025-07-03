@@ -2,6 +2,7 @@ import { twMerge } from 'tailwind-merge';
 import clsx, { ClassValue } from 'clsx';
 import prisma from './db';
 import { EventoEvent } from '@prisma/client';
+import { unstable_cache } from 'next/cache';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -16,21 +17,23 @@ export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const fetchEvent = async (slug: string): Promise<EventoEvent> => {
-  const event = await prisma.eventoEvent.findUnique({
-    where: {
-      slug,
-    },
-  });
+export const fetchEvent = unstable_cache(
+  async (slug: string): Promise<EventoEvent> => {
+    const event = await prisma.eventoEvent.findUnique({
+      where: {
+        slug,
+      },
+    });
 
-  if (!event) {
-    throw new Error('Event not found');
-  }
+    if (!event) {
+      throw new Error('Event not found');
+    }
 
-  return event as EventoEvent;
-};
+    return event as EventoEvent;
+  },
+);
 
-export const fetchEvents = async (city: string, page = 1) => {
+export const fetchEvents = unstable_cache(async (city: string, page = 1) => {
   const pageSize = 6;
   const safePage = Math.max(1, page);
 
@@ -45,16 +48,6 @@ export const fetchEvents = async (city: string, page = 1) => {
     take: pageSize,
   });
 
-  // let totalCount;
-  // if (city === 'all') {
-  //   totalCount = await prisma.eventoEvent.count();
-  // } else {
-  //   totalCount = await prisma.eventoEvent.count({
-  //     where: {
-  //       city: capitalize(city),
-  //     },
-  //   });
-  // }
   const totalCount =
     city === 'all'
       ? await prisma.eventoEvent.count()
@@ -65,4 +58,4 @@ export const fetchEvents = async (city: string, page = 1) => {
         });
 
   return { events, totalCount };
-};
+});
