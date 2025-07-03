@@ -1,10 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 import clsx, { ClassValue } from 'clsx';
-// import { EVENTO_MAIN_URL } from '@/constants';
-import { EventoEvent } from '@prisma/client';
 import prisma from './db';
-
-// const prisma = new PrismaClient();
+import notFound from '@/app/not-found';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -20,25 +17,22 @@ export const capitalize = (str: string) => {
 };
 
 export const fetchEvent = async (slug: string) => {
-  // const response = await fetch(`${EVENTO_MAIN_URL}/events/${slug}`);
-  // const event: EventoEvent = await response.json();
-
   const event = await prisma.eventoEvent.findUnique({
     where: {
-      slug: slug,
+      slug,
     },
   });
 
-  return event as EventoEvent;
+  if (!event) {
+    return notFound();
+  }
+
+  return event;
 };
 
-export const fetchEvents = async (city: string) => {
-  // const response = await fetch(`${EVENTO_MAIN_URL}/events?city=${city}`, {
-  //   next: {
-  //     revalidate: 180,
-  //   },
-  // });
-  // const events: EventoEvent[] = await response.json();
+export const fetchEvents = async (city: string, page = 1) => {
+  const pageSize = 6;
+  const safePage = Math.max(1, page);
 
   const events = await prisma.eventoEvent.findMany({
     where: {
@@ -47,7 +41,28 @@ export const fetchEvents = async (city: string) => {
     orderBy: {
       date: 'asc',
     },
+    skip: (safePage - 1) * pageSize,
+    take: pageSize,
   });
 
-  return events as EventoEvent[];
+  // let totalCount;
+  // if (city === 'all') {
+  //   totalCount = await prisma.eventoEvent.count();
+  // } else {
+  //   totalCount = await prisma.eventoEvent.count({
+  //     where: {
+  //       city: capitalize(city),
+  //     },
+  //   });
+  // }
+  const totalCount =
+    city === 'all'
+      ? await prisma.eventoEvent.count()
+      : await prisma.eventoEvent.count({
+          where: {
+            city: capitalize(city),
+          },
+        });
+
+  return { events, totalCount };
 };

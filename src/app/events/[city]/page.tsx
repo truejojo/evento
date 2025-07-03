@@ -1,10 +1,10 @@
+import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import EventsList from '@/components/EventsList';
 import H1 from '@/components/H1';
-import { EventsPageProps } from '@/types';
-import { Suspense } from 'react';
-import Loading from './loading';
+import { EventsPageExtraProps, EventsPageProps } from '@/types';
 import { capitalize } from '@/lib';
-import type { Metadata } from 'next';
+import Loading from './loading';
 
 export const generateMetadata = async ({
   params,
@@ -16,8 +16,11 @@ export const generateMetadata = async ({
   };
 };
 
-const EventsPage = async ({ params }: EventsPageProps) => {
+const EventsPage = async ({ params, searchParams }: EventsPageExtraProps) => {
   const { city } = await params;
+  const { page } = (await searchParams) || 1;
+
+  const safePage = page === undefined ? 1 : +page;
 
   return (
     <main className='flex flex-col items-center gap-20 min-h-[110vh] py-20'>
@@ -29,8 +32,8 @@ const EventsPage = async ({ params }: EventsPageProps) => {
         </H1>
       )}
 
-      <Suspense fallback={<Loading />}>
-        <EventsList city={city} />
+      <Suspense key={city + page} fallback={<Loading />}>
+        <EventsList city={city} page={+safePage} />
       </Suspense>
     </main>
   );

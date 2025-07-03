@@ -6,17 +6,12 @@ export type EventsPageProps = {
   };
 };
 
-// export type EventProps = {
-//   id: number;
-//   name: string;
-//   slug: string;
-//   city: string;
-//   location: string;
-//   date: Date;
-//   organizerName: string;
-//   imageUrl: string;
-//   description: string;
-// };
+export type EventsPageExtraProps = {
+  params: {
+    city: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 export type EventCardProps = {
   event: EventoEvent;
@@ -24,4 +19,5 @@ export type EventCardProps = {
 
 export type EventsListProps = {
   city: string;
+  page: number;
 };
