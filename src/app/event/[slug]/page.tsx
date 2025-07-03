@@ -16,6 +16,10 @@ export const generateMetadata = async ({
 
   const event = await fetchEvent(slug);
 
+  if (!event) {
+    throw new Error('Event not found');
+  }
+
   return {
     title: `Event: ${capitalize(event.name)}`,
   };
@@ -25,6 +29,10 @@ const EventPage = async ({ params }: EventPageProps) => {
   const { slug } = await params;
 
   const event = await fetchEvent(slug);
+
+  if (!event) {
+    throw new Error('Event not found');
+  }
   const date = new Date(event.date);
 
   return (

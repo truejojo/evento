@@ -5,6 +5,7 @@ import H1 from '@/components/H1';
 import { EventsPageExtraProps, EventsPageProps } from '@/types';
 import { capitalize } from '@/lib';
 import Loading from './loading';
+import z from 'zod';
 
 export const generateMetadata = async ({
   params,
@@ -16,11 +17,18 @@ export const generateMetadata = async ({
   };
 };
 
+const pageNumberScheme = z.coerce.number().int().positive().optional();
+
 const EventsPage = async ({ params, searchParams }: EventsPageExtraProps) => {
   const { city } = await params;
   const { page } = (await searchParams) || 1;
 
-  const safePage = page === undefined ? 1 : +page;
+  // const safePage = page === undefined ? 1 : +page;
+  const result = pageNumberScheme.safeParse(page);
+  if (result.error || !result.success) {
+    throw new Error('Invalid page number');
+  }
+  const safePage = result.data ?? 1;
 
   return (
     <main className='flex flex-col items-center gap-20 min-h-[110vh] py-20'>
@@ -32,8 +40,8 @@ const EventsPage = async ({ params, searchParams }: EventsPageExtraProps) => {
         </H1>
       )}
 
-      <Suspense key={city + page} fallback={<Loading />}>
-        <EventsList city={city} page={+safePage} />
+      <Suspense key={city + safePage} fallback={<Loading />}>
+        <EventsList city={city} page={safePage} />
       </Suspense>
     </main>
   );

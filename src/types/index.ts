@@ -19,5 +19,5 @@ export type EventCardProps = {
 
 export type EventsListProps = {
   city: string;
-  page: number;
+  page?: number;
 };

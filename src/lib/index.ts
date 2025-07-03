@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge';
 import clsx, { ClassValue } from 'clsx';
 import prisma from './db';
-import notFound from '@/app/not-found';
+import { EventoEvent } from '@prisma/client';
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -16,7 +16,7 @@ export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const fetchEvent = async (slug: string) => {
+export const fetchEvent = async (slug: string): Promise<EventoEvent> => {
   const event = await prisma.eventoEvent.findUnique({
     where: {
       slug,
@@ -24,10 +24,10 @@ export const fetchEvent = async (slug: string) => {
   });
 
   if (!event) {
-    return notFound();
+    throw new Error('Event not found');
   }
 
-  return event;
+  return event as EventoEvent;
 };
 
 export const fetchEvents = async (city: string, page = 1) => {
